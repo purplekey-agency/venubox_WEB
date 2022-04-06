@@ -1,0 +1,24 @@
+<label class="container">
+  <ng-container *ngIf="ngControl">
+    <input
+      type="radio"
+      [attr.name]="name"
+      [value]="value"
+      [formControl]="ngControl.control"
+      [checked]="value == ngControl.control.value"
+    />
+  </ng-container>
+
+  <ng-container *ngIf="!ngControl">
+    <input
+      type="radio"
+      [attr.name]="name"
+      [value]="value"
+      [checked]="checked"
+      (change)="onSelectChange()"
+    />
+  </ng-container>
+
+  <span class="checkmark"></span>
+  <span class="label">{{ label }}</span>
+</label>

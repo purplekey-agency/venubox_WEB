@@ -1,0 +1,40 @@
+@import '../text-input/text-input.component.scss';
+
+.input-wrapper {
+  position: relative;
+
+  &.active {
+    z-index: 999;
+  }
+
+  .popup {
+    width: 350px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+::ng-deep {
+  .dl-abdtp-left-button {
+    .left-icon {
+      &:before {
+        content: '\f053';
+        font-family: 'Font Awesome 5 Pro';
+      }
+    }
+  }
+
+  .dl-abdtp-right-button {
+    .right-icon {
+      &:before {
+        content: '\f054';
+        font-family: 'Font Awesome 5 Pro';
+      }
+    }
+  }
+}

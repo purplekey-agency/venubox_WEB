@@ -1,0 +1,38 @@
+<div id="map"></div>
+
+<div class="location-input-wrapper">
+  <form (submit)="searchAddress()">
+    <input
+      [placeholder]="'search' | translate"
+      [formControl]="address"
+      type="text"
+    />
+
+    <div class="buttons-wrapper">
+      <button type="submit"><i class="fal fa-search"></i></button>
+      <div class="vertical-line"></div>
+      <button class="lb-clear" type="reset">
+        <i class="fal fa-times"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="location-radius-wrapper">
+  <form>
+    <input
+      type="number"
+      [placeholder]="'radius' | translate"
+      [formControl]="form.controls.radius"
+    />
+    m
+  </form>
+</div>
+
+<button class="button button-outline-primary save-button" (click)="save()">
+  {{ 'save' | translate }}
+</button>
+
+<button class="close-button" (click)="close()">
+  <i class="fal fa-times"></i>
+</button>

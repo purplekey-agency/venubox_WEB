@@ -1,0 +1,69 @@
+@import './../../../../assets/scss/variables';
+
+.container {
+  display: flex;
+  margin: 8px;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: 15px;
+  user-select: none;
+  cursor: pointer;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+
+    &:checked ~ {
+      .checkmark {
+        border: 2px solid $primary;
+
+        &:after {
+          display: block;
+        }
+      }
+      .label {
+        color: $primary;
+      }
+    }
+  }
+  .label {
+    padding-left: 16px;
+    color: lighten($secondary, 40);
+    font-size: 15px;
+  }
+
+  .checkmark {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 16px;
+    width: 16px;
+    margin-top: -8px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid lighten($secondary, 40);
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: none;
+      height: 8px;
+      width: 8px;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      background: $primary;
+    }
+  }
+
+  &:hover input ~ .checkmark {
+    background-color: #fafcfc;
+  }
+}

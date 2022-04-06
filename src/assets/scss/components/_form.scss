@@ -1,0 +1,23 @@
+.form-group {
+  display: inline-block;
+  width: 250px;
+  margin-top: 12px;
+  width: 100%;
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: #777;
+  }
+
+  &-inline {
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-bottom: 0;
+      margin-right: 18px;
+    }
+  }
+}

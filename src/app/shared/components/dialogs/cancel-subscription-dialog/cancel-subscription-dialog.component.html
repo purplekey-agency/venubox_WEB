@@ -1,0 +1,27 @@
+<div class="dialog-content">
+  <h3>Are you sure you want to cancel your subscription?</h3>
+  <p>
+    You will still be able to sign in to your account but will not be able to
+    create any promotions or communicate with customers.
+  </p>
+
+  <div class="mt-4 text-right">
+    <button
+      (click)="close()"
+      type="button"
+      class="button button-outline-primary text-uppercase mr-2"
+      [disabled]="isLoading"
+    >
+      {{ 'decline' | translate }}
+    </button>
+
+    <button
+      (click)="accept()"
+      type="submit"
+      class="button button-primary text-uppercase"
+      [class.button-loading]="isLoading"
+    >
+      {{ 'accept' | translate }}
+    </button>
+  </div>
+</div>

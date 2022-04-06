@@ -1,0 +1,292 @@
+<div class="container mb-4">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'admin' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <a routerLink="/admin/treasure-hunt">{{ 'treasureHunt' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{
+      (id ? 'updateTreasureHunt' : 'addTreasureHunt') | translate
+    }}</span>
+  </div>
+
+  <div class="form-wrapper">
+    <app-alerts [alerts]="alerts"></app-alerts>
+
+    <div *ngIf="id" class="tabs">
+      <a
+        href="javascript:;"
+        class="tab"
+        [class.active]="selectedTab == 'info'"
+        (click)="selectTab('info')"
+        >Info</a
+      >
+      <a
+        href="javascript:;"
+        class="tab"
+        [class.active]="selectedTab == 'progress'"
+        (click)="selectTab('progress')"
+        >Progress</a
+      >
+    </div>
+
+    <div class="spinner-wrapper" *ngIf="isLoading">
+      <div class="spinner"></div>
+    </div>
+
+    <ng-container *ngIf="selectedTab === 'info'">
+      <div class="row" *ngIf="!isLoading">
+        <div class="col-md-3">
+          <div class="border-box">
+            <form class="form" [formGroup]="form" (submit)="save()">
+              <div class="form-group">
+                <label for="name">{{ 'name' | translate }}</label>
+                <app-text-input
+                  inputName="name"
+                  size="lg"
+                  [formControl]="form.controls['name']"
+                >
+                </app-text-input>
+              </div>
+
+              <div class="form-group">
+                <label for="city">{{ 'city' | translate }}</label>
+                <app-text-input
+                  inputName="city"
+                  size="lg"
+                  [formControl]="form.controls['city']"
+                >
+                </app-text-input>
+              </div>
+
+              <div class="form-group">
+                <label for="cityPart">{{ 'cityPart' | translate }}</label>
+                <app-text-input
+                  inputName="cityPart"
+                  size="lg"
+                  [formControl]="form.controls['cityPart']"
+                >
+                </app-text-input>
+              </div>
+
+              <div class="form-group">
+                <label for="">{{ 'start' | translate }}</label>
+                <app-date-time-input
+                  [formControl]="form.controls['startDate']"
+                  [maxDate]="sameAsEndDate()"
+                  type="date"
+                  placeholder="Select date"
+                ></app-date-time-input>
+
+                <div class="mt-2">
+                  <app-time-select
+                    [control]="form.controls['startTime']"
+                  ></app-time-select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="">{{ 'end' | translate }}</label>
+                <app-date-time-input
+                  [formControl]="form.controls['endDate']"
+                  [minDate]="sameAsStartDate()"
+                  type="date"
+                  placeholder="Select date"
+                ></app-date-time-input>
+
+                <div class="mt-2">
+                  <app-time-select
+                    [control]="form.controls['endTime']"
+                  ></app-time-select>
+                </div>
+              </div>
+
+              <div class="form-buttons">
+                <button
+                  type="button"
+                  (click)="cancel()"
+                  [disabled]="isSaving"
+                  class="button button-outline-primary mr-1"
+                >
+                  {{ 'cancel' | translate }}
+                </button>
+                <button
+                  type="submit"
+                  [class.button-loading]="isSaving"
+                  class="button button-primary"
+                >
+                  {{ (id ? 'update' : 'create') | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="border-box">
+            <form class="form" [formGroup]="form">
+              <div class="goals-list">
+                <div
+                  cdkDropList
+                  [cdkDropListData]="goals"
+                  (cdkDropListDropped)="drop($event)"
+                >
+                  <div
+                    *ngFor="let goal of goals.controls; let i = index"
+                    class="goal-item"
+                    cdkDrag
+                  >
+                    <div class="goal-item__header">
+                      <h3>
+                        {{ i + 1 }}. Goal
+                        <a href="javascript:;" (click)="deleteGoal(i)"
+                          ><i class="far fa-trash"></i
+                        ></a>
+                      </h3>
+                      <div class="goal-item-drag" cdkDragHandle></div>
+                    </div>
+                    <ng-container
+                      *ngTemplateOutlet="
+                        goalForm;
+                        context: { $implicit: goal, i: i }
+                      "
+                    ></ng-container>
+                  </div>
+                </div>
+
+                <div class="add-goal-wrapper">
+                  <button
+                    class="button button-outline-primary"
+                    (click)="addGoal()"
+                  >
+                    + Add goal
+                  </button>
+                </div>
+
+                <div class="mt-2">
+                  <div class="goal-item" cdkDrag [cdkDragDisabled]="true">
+                    <div class="goal-item__header">
+                      <h3>End Goal</h3>
+                    </div>
+                    <ng-container
+                      *ngTemplateOutlet="
+                        goalForm;
+                        context: { $implicit: form.controls.endGoal, i: -1 }
+                      "
+                    ></ng-container>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="selectedTab === 'progress'">
+      <div class="d-flex mb-2">
+        <div class="flex-grow-1"></div>
+        <h6>Users hunting: {{ userProgress.length }}</h6>
+      </div>
+
+      <div
+        class="user-progress-wrapper"
+        *ngFor="let p of userProgress; let i = index"
+        [class.is-first]="i === 0 && p.goalsLeft === 0"
+      >
+        <div
+          class="user-image"
+          [ngStyle]="{
+            'background-image': p.user.profileImage
+              ? 'url(' + p.user.profileImage + ')'
+              : 'url(../../../../assets/img/defaultAvatar.png)'
+          }"
+        ></div>
+
+        <div class="user-info">
+          <div class="user-name">{{ p.user.name }}</div>
+          <div class="user-email">{{ p.user.email }}</div>
+        </div>
+
+        <div class="user-progress">
+          <ng-container
+            *ngTemplateOutlet="
+              i === 0 && p.goalsLeft === 0 ? trophy : goalsLeft;
+              context: { $implicit: p }
+            "
+          ></ng-container>
+
+          <span class="last-reach"
+            ><span>Last reach:</span>
+            {{ p.lastGoalReached | appDate: 'MMM DD, y, HH:mm:ss' }}</span
+          >
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #trophy
+  ><div class="user-trophy"><i class="far fa-trophy-alt"></i></div
+></ng-template>
+
+<ng-template #goalsLeft let-p>
+  <span class="reached" *ngIf="p.goalsLeft">{{ p.goalsLeft }} left</span>
+  <span class="reached" *ngIf="!p.goalsLeft">Done</span>
+</ng-template>
+
+<ng-template #goalForm let-goal let-i="i">
+  <div class="goal-item__content">
+    <button
+      class="choose-location"
+      (click)="chooseLocation(i)"
+      [class.has-location]="goal.value.latitude"
+    >
+      <i class="fa fa-map-marker-alt"></i>
+      {{
+        goal.value.latitude
+          ? ('changeLocation' | translate)
+          : ('chooseLocation' | translate)
+      }}
+    </button>
+    <div class="form-group">
+      <label [for]="'endMessage-' + i">{{ 'endMessage' | translate }}</label>
+      <textarea
+        [id]="'endMessage-' + i"
+        class="app-textarea"
+        [formControl]="goal.controls['endMessage']"
+      ></textarea>
+    </div>
+
+    <ng-container *ngIf="i !== -1">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label [for]="'nextClueMessageDelay-' + i"
+              >{{ 'nextClueMessageDelay' | translate }} (min.)</label
+            >
+            <app-text-input
+              [inputName]="'nextClueMessageDelay-' + i"
+              size="lg"
+              [formControl]="goal.controls['nextClueMessageDelay']"
+              type="number"
+              min="0"
+            >
+            </app-text-input>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="form-group">
+            <label [for]="'nextClueMessage-' + i">{{
+              'nextClueMessage' | translate
+            }}</label>
+
+            <textarea
+              [id]="'nextClueMessage-' + i"
+              class="app-textarea"
+              [formControl]="goal.controls['nextClueMessage']"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

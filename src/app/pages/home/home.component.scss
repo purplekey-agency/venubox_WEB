@@ -1,0 +1,292 @@
+@import '../../../assets/scss/variables';
+
+.home-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  ::ng-deep .select-wrapper {
+    max-width: 150px !important;
+  }
+}
+
+.home-page-card {
+  height: 100%;
+  padding: 16px;
+  border: 1px solid lighten($secondary, 45);
+  border-radius: 3px;
+  background: #fff;
+
+  &.popout {
+    position: relative;
+    z-index: 100;
+  }
+}
+
+.activities {
+  display: flex;
+  flex-direction: row;
+  margin: 0 -4px;
+
+  .activity-box-wrapper {
+    padding: 0 4px;
+    flex: 1;
+
+    .activity-box {
+      position: relative;
+      border: 2px dashed $primary;
+      outline: none;
+      background: none;
+      border-radius: 3px;
+      width: 100%;
+      color: $primary;
+      padding: 0;
+
+      &:before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+      }
+
+      i {
+        font-size: 30px;
+      }
+
+      span {
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      &:hover {
+        background: darken(#fff, 3);
+      }
+
+      .activity-box-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 8px;
+      }
+    }
+  }
+}
+
+.statistics {
+  .statistic-box {
+    border: 1px solid lighten($secondary, 45);
+    padding: 8px;
+    text-align: right;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      display: block;
+      width: 75%;
+      margin-right: 0px !important;
+      margin: auto;
+      color: lighten($secondary, 25);
+      line-height: 1.2;
+    }
+
+    .count {
+      font-size: 35px;
+      color: $primary;
+      font-weight: 500;
+      line-height: 35px;
+      margin-top: 8px;
+    }
+
+    .icon-box {
+      position: absolute;
+      border: 2px dashed $primary;
+      width: 60px;
+      height: 50px;
+      top: -15px;
+      left: 0px;
+      z-index: 10;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $primary;
+      font-size: 27px;
+    }
+  }
+}
+
+.last-promotion {
+  margin-top: 32px;
+
+  .promotion {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      color: lighten($secondary, 15);
+    }
+
+    a {
+      color: lighten($secondary, 45);
+      font-size: 18px;
+      line-height: 18px;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.popout-overlay {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.plans-link-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  a {
+    color: #666;
+    text-decoration: underline;
+    font-size: 15px;
+    margin-top: 5px;
+
+    &:hover {
+      color: $primary;
+      text-decoration: none;
+    }
+  }
+}
+
+.sub-stats {
+  &__header {
+    display: flex;
+    align-items: center;
+
+    .sub-stats__title {
+      flex: 1;
+      color: #333;
+      font-size: 26px;
+      line-height: 1.4;
+
+      b {
+        color: $primary;
+        display: block;
+      }
+    }
+
+    .sub-stats__chart {
+      width: 70px;
+    }
+
+    .circular-chart {
+      display: block;
+      max-width: 70px;
+      max-height: 250px;
+    }
+
+    .circle-bg {
+      fill: none;
+      stroke: #bbb;
+      stroke-width: 2.5;
+    }
+
+    .circle {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      animation: progress 1s ease-out forwards;
+      stroke: $primary;
+    }
+
+    .percentage {
+      fill: $primary;
+      font-family: sans-serif;
+      font-size: 0.7em;
+      text-anchor: middle;
+    }
+
+    @keyframes progress {
+      0% {
+        stroke-dasharray: 0 100;
+      }
+    }
+  }
+
+  &__list {
+    margin-top: 30px;
+
+    &-item {
+      margin-top: 50px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      label {
+        color: #333;
+
+        b {
+          color: $primary;
+        }
+      }
+
+      .limits {
+        display: flex;
+        margin: 0 -2px;
+
+        div {
+          width: 100%;
+          height: 4px;
+          border-radius: 2px;
+          background: #ddd;
+          margin: 0 2px;
+
+          &.used {
+            background: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  &__overview {
+    margin-top: 30px;
+
+    h3 {
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    table {
+      margin-top: 15px;
+
+      tr {
+        td:first-child {
+          font-weight: 500;
+          text-align: right;
+          color: #666;
+        }
+
+        td:last-child {
+          padding-left: 12px;
+        }
+      }
+    }
+  }
+}

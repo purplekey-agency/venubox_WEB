@@ -1,0 +1,8 @@
+<ng-container *ngFor="let alert of alerts">
+  <div
+    *ngIf="ref || alert.ref ? alert.ref === ref : true"
+    [class]="'alert alert-' + alert.type"
+  >
+    {{ alert.message }}
+  </div>
+</ng-container>

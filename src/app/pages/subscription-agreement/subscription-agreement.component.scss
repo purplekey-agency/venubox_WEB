@@ -1,0 +1,19 @@
+@import '../../../assets/scss/variables';
+
+.title {
+  font-weight: 700;
+  color:$primary;
+  margin-top: 40px;
+}
+
+.description{
+  font-weight: 500;
+  color:rgb(102,102,102);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.list-item{
+  font-weight: 500;
+  color:rgb(102,102,102);
+}

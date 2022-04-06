@@ -1,0 +1,58 @@
+<div
+  class="select-wrapper"
+  [class.opened]="isOpened"
+  [class.disabled]="disabled || (ngControl && ngControl.disabled)"
+>
+  <button
+    type="button"
+    (click)="openList()"
+    class="select-button"
+    [class.ng-invalid]="ngControl ? ngControl.invalid : false"
+    [class.ng-touched]="ngControl ? ngControl.touched : false"
+  >
+    <div class="multiselect-input" *ngIf="multiselect && selectedOption.length">
+      <div
+        *ngFor="let item of sortedOptions(selectedOption)"
+        class="multiselect-item"
+        (click)="removeOption($event, item)"
+      >
+        {{ item.label }}
+
+        <a href="javascript:;"><i class="fas fa-times"></i></a>
+      </div>
+    </div>
+
+    <input
+      *ngIf="!multiselect || (multiselect && !selectedOption?.length)"
+      class="selected-value"
+      [readonly]="type == 'static'"
+      [formControl]="searchTerm"
+      [placeholder]="selectedOptionName ? selectedOptionName : placeholder"
+      [value]="selectedOptionName"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+    <i class="far fa-angle-down arrow-icon"></i>
+  </button>
+
+  <div class="options-list" #optionsList>
+    <div class="spinner spinner-sm my-2" *ngIf="isLoading"></div>
+    <ng-container *ngIf="!isLoading">
+      <div
+        class="option"
+        *ngFor="let option of options"
+        (click)="onSelected(option); openList()"
+        [class.remove]="isSelected(option) && multiselect"
+        [class.selected]="isSelected(option)"
+        #selectOption
+      >
+        {{ option.label }}
+        <i *ngIf="isSelected(option) && multiselect" class="fal fa-times"></i>
+      </div>
+      <div *ngIf="options.length === 0 && !isLoading" class="no-results">
+        <span readolny>{{ 'noResults' | translate }}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<app-form-error [ngControl]="ngControl"></app-form-error>

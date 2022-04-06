@@ -1,0 +1,23 @@
+<div class="container my-4">
+  <app-subscription-plans
+    (packageSelected)="packageSelected($event)"
+    (customCodeChanged)="customCodeChanged($event)"
+    (tabSelected)="tabSelected($event)"
+    [selectedPackage]="selectedPackage"
+  ></app-subscription-plans>
+
+  <div class="mt-5 text-center">
+    <button
+      (click)="pay()"
+      class="button button-primary ml-2"
+      [disabled]="!selectedPackage && !customCode"
+    >
+      {{
+        (currentUser?.activeSubscriptions?.length
+          ? 'changePlan'
+          : 'continueToPayment'
+        ) | translate
+      }}
+    </button>
+  </div>
+</div>

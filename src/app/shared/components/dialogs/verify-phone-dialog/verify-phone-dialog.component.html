@@ -1,0 +1,23 @@
+<h3>Verify your Phone Number</h3>
+
+<form class="form" [formGroup]="form" (submit)="submit()">
+  <app-alerts [alerts]="alerts"></app-alerts>
+
+  <div class="form-group">
+    <label for="code">{{ 'code' | translate }}</label>
+    <app-text-input
+      inputName="code"
+      size="lg"
+      [formControl]="form.controls['code']"
+    >
+    </app-text-input>
+  </div>
+
+  <button
+    [class.button-loading]="isLoading"
+    type="submit"
+    class="button button-primary w-100"
+  >
+    {{ 'verify' | translate }}
+  </button>
+</form>

@@ -1,0 +1,14 @@
+<input
+  class="input"
+  [placeholder]="placeholder"
+  [type]="type"
+  [formControl]="ngControl ? ngControl.control : dummyFormControl"
+  [name]="inputName"
+  [id]="inputName"
+  [readonly]="readonly"
+  autocomplete="off"
+  [maxlength]="maxlength"
+  [autocomplete]="type === 'password' ? 'on' : 'off'"
+  [min]="min"
+/>
+<app-form-error [ngControl]="ngControl"></app-form-error>

@@ -1,0 +1,8 @@
+<div class="dialog-overlay" (click)="onOverlayClicked($event)">
+  <div
+    [class]="'dialog dialog-' + size + ' ' + className"
+    (click)="onDialogClicked($event)"
+  >
+    <ng-template appInsertion></ng-template>
+  </div>
+</div>

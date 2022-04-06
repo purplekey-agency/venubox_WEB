@@ -1,0 +1,36 @@
+.images-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: -5px;
+
+  .image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border: 2px solid #eee;
+    border-radius: 5px;
+    opacity: 0.8;
+    transition: all 0.2s;
+
+    &:hover {
+      z-index: 5;
+      opacity: 1;
+      box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+
+    &:before {
+      content: '';
+      padding-top: 100%;
+    }
+  }
+}
+
+.nothing-found {
+  color: #999;
+}

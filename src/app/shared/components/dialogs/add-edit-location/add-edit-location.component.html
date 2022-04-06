@@ -1,0 +1,81 @@
+<div id="map"></div>
+<div class="location-input-wrapper">
+  <form (submit)="searchAddress()">
+    <input
+      [placeholder]="'search' | translate"
+      [formControl]="address"
+      type="text"
+    />
+    <div class="buttons-wrapper">
+      <button type="submit"><i class="fal fa-search"></i></button>
+      <div class="vertical-line"></div>
+      <button class="lb-clear" type="reset">
+        <i class="fal fa-times"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="map-details">
+  <form class="form" [formGroup]="form" (submit)="save()">
+    <app-alerts [alerts]="alerts"></app-alerts>
+    <div class="form-group">
+      <label for="name">{{ 'name' | translate }}</label>
+      <app-text-input
+        inputName="name"
+        size="lg"
+        [formControl]="form.controls['name']"
+      >
+      </app-text-input>
+    </div>
+    <div class="form-group">
+      <label for="radius">{{ 'radius' | translate }}</label>
+      <div class="radius">
+        <app-text-input
+          inputName="radius"
+          [formControl]="form.controls['radius']"
+          size="lg"
+        >
+        </app-text-input>
+        <span class="ml-1">m</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="latitude">{{ 'latitude' | translate }}</label>
+      <app-text-input
+        inputName="latitude"
+        [formControl]="form.controls['latitude']"
+        size="lg"
+      >
+      </app-text-input>
+    </div>
+
+    <div class="form-group">
+      <label for="longitude">{{ 'longitude' | translate }}</label>
+      <app-text-input
+        inputName="longitude"
+        [formControl]="form.controls['longitude']"
+        size="lg"
+      >
+      </app-text-input>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        (click)="close()"
+        [disabled]="isLoading"
+        class="button button-outline-primary mr-1"
+      >
+        {{ 'close' | translate }}
+      </button>
+      <button
+        type="submit"
+        [class.button-loading]="isLoading"
+        class="button button-primary"
+      >
+        {{ (locationId ? 'update' : 'create') | translate }}
+      </button>
+    </div>
+  </form>
+</div>

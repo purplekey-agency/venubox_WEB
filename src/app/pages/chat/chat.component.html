@@ -1,0 +1,267 @@
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'home' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{ 'chat' | translate }}</span>
+  </div>
+
+  <p class="text-muted">
+    {{ 'chatSubtitle' | translate }}
+  </p>
+
+  <div class="tabs">
+    <a
+      href="javascript:;"
+      class="tab"
+      *ngFor="let identity of identities"
+      [class.active]="selectedIdentity == identity.id"
+      (click)="selectIdentity(identity.id)"
+      >{{ identity.name }}</a
+    >
+  </div>
+
+  <div *ngIf="!selectedIdentity && identities.length">
+    Please select Chat Contact Profile from above to load chats.
+  </div>
+
+  <div *ngIf="!isLoadingIdentities && !identities.length">
+    No Chat Contact Profiles found. You can add them
+    <a routerLink="/branding">here</a>.
+  </div>
+
+  <div class="spinner" *ngIf="isLoadingIdentities"></div>
+
+  <div class="chat-container" *ngIf="selectedIdentity">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="border-box p-0">
+          <div class="chat-list">
+            <div class="spinner mt-2" *ngIf="isLoadingChats"></div>
+            <div class="nothing-found" *ngIf="!isLoadingChats && !chats.length">
+              No chats found...
+            </div>
+            <a
+              href="javascript:;"
+              class="chat-item"
+              *ngFor="let chat of chats"
+              (click)="loadChat(chat.id)"
+            >
+              <div class="ci-info">
+                <div
+                  class="ci-info-avatar"
+                  [class.unread]="isUnread(chat)"
+                  style="
+                    background-image: url('https://www.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg');
+                  "
+                  [style.background-image]="
+                    'url(' + findOtherUser(chat)?.profileImage + ')'
+                  "
+                ></div>
+                <div class="ci-info-text">
+                  <span class="ci-info-name">
+                    <span
+                      class="ci-info-unread-dot"
+                      *ngIf="
+                        chat.lastMessage
+                          ? findMyUser(chat)?.lastRead <
+                            chat.lastMessage.createdOn
+                          : false
+                      "
+                    ></span>
+                    {{ findOtherUser(chat)?.name || '-' }}
+                  </span>
+                  <div class="ci-info-date">
+                    {{
+                      chat.lastMessage
+                        ? formatTimestamp(chat.lastMessage.createdOn)
+                        : ''
+                    }}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="spinner mt-2" *ngIf="isLoadingChat"></div>
+
+        <div class="border-box chat-box-wrapper" *ngIf="chat">
+          <div class="chat-box">
+            <div #chatBoxMessages class="chat-box-messages">
+              <div #chatBoxMessagesInner class="chat-box-messages-inner">
+                <div class="load-more-wrapper">
+                  <a
+                    href="javascript:;"
+                    *ngIf="tableData.page < tableData.totalPages"
+                    (click)="loadChatMessages(true)"
+                    >Load more messages</a
+                  >
+                </div>
+                <ng-container
+                  *ngFor="let message of chatMessages?.results; let i = index"
+                >
+                  <div
+                    class="date-timestamp"
+                    *ngIf="
+                      !isSameDay(
+                        message.createdOn,
+                        chatMessages.results[i - 1]?.createdOn
+                      )
+                    "
+                  >
+                    {{ formatDateTimestamp(message.createdOn) }}
+                  </div>
+
+                  <div
+                    class="chat-message-wrapper is-receiver"
+                    [class.is-receiver]="message.user.userId !== myUserId"
+                    [class.is-sender]="message.user.userId === myUserId"
+                  >
+                    <div
+                      *ngIf="
+                        i > 0 &&
+                        chatMessages.results[i + 1]?.user.userId !==
+                          message.user.userId
+                      "
+                      class="avatar"
+                      [style.background-image]="
+                        'url(' + message.user.profileImage + ')'
+                      "
+                    ></div>
+                    <div class="message">
+                      <div
+                        class="bubble"
+                        [attr.title]="formatFullTimestamp(message.createdOn)"
+                      >
+                        {{ message.content }}
+
+                        <div *ngIf="message?.data?.urls">
+                          <a
+                            *ngFor="let image of message.data.urls"
+                            [href]="image"
+                            target="_blank"
+                            ><img
+                              [src]="image"
+                              style="max-width: 150px; max-height: 150px"
+                          /></a>
+                        </div>
+
+                        <div *ngIf="message?.data?.promotion">
+                          <span style="font-style: italic">Shared Promo:</span>
+                          <img
+                            [src]="message.data.promotion.image?.imageUrl"
+                            style="
+                              max-width: 150px;
+                              max-height: 150px;
+                              display: block;
+                            "
+                          />
+                          <span
+                            style="
+                              display: block;
+                              font-weight: bold;
+                              margin-top: 6px;
+                            "
+                            >{{ message.data.promotion.name }}</span
+                          >
+                        </div>
+
+                        <div *ngIf="message?.data?.geoCoordinate">
+                          <a
+                            [href]="
+                              'https://www.google.com/maps/search/?api=1&query=' +
+                              message.data.geoCoordinate.latitude +
+                              ',' +
+                              message.data.geoCoordinate.longitude
+                            "
+                            target="_blank"
+                          >
+                            <img
+                              [attr.src]="
+                                'https://maps.googleapis.com/maps/api/staticmap?center=' +
+                                message.data.geoCoordinate.latitude +
+                                ',' +
+                                message.data.geoCoordinate.longitude +
+                                '&zoom=15&size=150x100&maptype=roadmap&markers=color:red%7Csize:mid%7C' +
+                                message.data.geoCoordinate.latitude +
+                                ',' +
+                                message.data.geoCoordinate.longitude +
+                                '&key=AIzaSyA6Dfl5QvpPeZMMX_nyfHV-sAkCpwWDPNk'
+                              "
+                            />
+                          </a>
+                        </div>
+
+                        <button
+                          *ngIf="message.user.userId === myUserId"
+                          class="delete-message"
+                          (click)="deleteMessage(message?.id)"
+                        >
+                          <i class="far fa-trash"></i>
+                        </button>
+                      </div>
+                      <div
+                        class="info"
+                        *ngIf="
+                          i > 0 &&
+                          chatMessages.results[i + 1]?.user.userId !==
+                            message.user.userId
+                        "
+                      >
+                        {{ formatTimestamp(message.createdOn) }}
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="chat-box-footer-wrapper">
+              <div class="chat-box-footer">
+                <form (submit)="sendMessage()">
+                  <div class="chat-box-footer-actions">
+                    <div class="action" (click)="setChatAction('emoji')">
+                      <i class="far fa-smile"></i>
+                    </div>
+                    <div class="action">
+                      <span class="gif" (click)="setChatAction('gif')"
+                        >GIF</span
+                      >
+                    </div>
+
+                    <div class="chat-action-view" #chatActionView>
+                      <emoji-mart
+                        *ngIf="chatFooterAction == 'emoji'"
+                        title="Pick your emoji…"
+                        [darkMode]="false"
+                        (emojiClick)="addEmoji($event)"
+                      ></emoji-mart>
+
+                      <app-gif-picker
+                        *ngIf="chatFooterAction == 'gif'"
+                        (gifSelected)="gifSelected($event)"
+                      ></app-gif-picker>
+                    </div>
+                  </div>
+                  <div class="chat-box-footer-input">
+                    <textarea
+                      rows="2"
+                      placeholder="Your Message..."
+                      [formControl]="messageControl"
+                    ></textarea>
+                  </div>
+
+                  <button class="chat-box-footer-send" type="submit">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+@import '../../../assets/scss/variables';
+
+.login-page {
+  padding: 64px 0;
+  // display: flex;
+  // justify-content: space-around;
+
+  .register-container {
+    border-right: 1px solid #dde0e5;
+    max-width: 700px;
+  }
+  button {
+    text-transform: uppercase;
+    width: 300px;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    max-width: 300px !important;
+    margin: auto;
+
+    .form {
+      .form-group {
+        label {
+          font-size: 13px !important;
+        }
+      }
+      .have-account-text {
+        display: flex;
+        line-height: 39px;
+        font-size: 12px;
+        color: lighten($secondary, 30);
+        justify-content: center;
+
+        a {
+          margin-left: 4px;
+          text-decoration: none;
+
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+
+      .forgot-password {
+        a {
+          font-size: 12px;
+          text-decoration: none;
+          color: lighten($secondary, 30) !important;
+        }
+        margin-top: 8px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        width: 100% !important;
+      }
+
+      ::ng-deep .text-input-wrapper input {
+        font-size: 14px;
+      }
+    }
+  }
+}

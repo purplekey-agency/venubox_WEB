@@ -1,0 +1,44 @@
+<div class="spinner" *ngIf="isLoading && !categories.length"></div>
+<app-alerts [alerts]="alerts"></app-alerts>
+
+<div class="my-2" *ngFor="let category of categories">
+  <app-toggle
+    [imageUrl]="category.imageUrl"
+    [toggleId]="category.id"
+    [inputName]="category.id"
+    [formControl]="categoriesForm.controls[category.id]"
+    [label]="category.name"
+    (valueChanged)="onCategoryChange($event)"
+  ></app-toggle>
+
+  <div class="my-4" *ngIf="categoriesForm.controls[category.id].value">
+    <ng-container *ngFor="let subCategory of category.subcategories">
+      <app-radio-button
+        [name]="category.id"
+        [value]="subCategory.id"
+        [label]="subCategory.name"
+        [checked]="isSubCategorySelected(subCategory.id)"
+        (onChange)="onSubCategoryChange($event)"
+      ></app-radio-button>
+    </ng-container>
+  </div>
+</div>
+
+<div class="text-right mt-4" *ngIf="categories.length">
+  <button
+    type="button"
+    (click)="cancel()"
+    [disabled]="isSaving"
+    class="button button-outline-primary mr-1"
+  >
+    {{ 'cancel' | translate }}
+  </button>
+  <button
+    (click)="save()"
+    type="submit"
+    class="button button-primary"
+    [class.button-loading]="isLoading"
+  >
+    {{ 'saveChanges' | translate }}
+  </button>
+</div>

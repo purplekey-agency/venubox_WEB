@@ -1,0 +1,47 @@
+.gif-picker {
+  width: 450px;
+  color: #222427;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background: #fff;
+  padding: 2px;
+
+  .spinner {
+    margin: 16px auto;
+  }
+
+  .nothing-found {
+    margin: auto;
+    color: #bbb;
+  }
+
+  .gif-search {
+    border: none;
+    background: none;
+    width: 100%;
+    color: #666;
+    outline: none;
+    height: 40px;
+    padding: 0 8px;
+    border-top: 1px solid #eee;
+  }
+
+  .gif-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    overflow-x: auto;
+    height: 125px;
+
+    img {
+      height: 100%;
+      margin-right: 4px;
+      cursor: pointer;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

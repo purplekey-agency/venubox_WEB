@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'admin' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{ 'users' | translate }}</span>
+  </div>
+
+  <app-alerts [alerts]="alerts"></app-alerts>
+
+  <div class="border-box">
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <h4 class="font-weight-normal">{{ 'users' | translate }}</h4>
+      </div>
+    </div>
+    <ngx-datatable
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="columns"
+      [loadingIndicator]="isLoading"
+      [footerHeight]="50"
+      [externalPaging]="true"
+      [externalSorting]="true"
+      [count]="tableData.totalResults"
+      [offset]="tableData.page - 1"
+      [limit]="tableData.pageSize"
+      (page)="tableChangePage($event)"
+      (sort)="tableSort($event)"
+    >
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #tableAction let-row="row" let-value="value">
+  <a class="action-button" (click)="deleteUser(row.id)" href="javascript:;">
+    <i class="fas fa-trash"></i>
+  </a>
+</ng-template>

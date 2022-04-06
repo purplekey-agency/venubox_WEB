@@ -1,0 +1,38 @@
+<div class="spinner" *ngIf="isLoading"></div>
+
+<ng-container *ngIf="!isLoading">
+  <div class="tabs" *ngIf="savedTemplates.length">
+    <a
+      href="javascript:;"
+      class="tab"
+      [class.active]="activeTab == 'saved'"
+      (click)="activeTab = 'saved'"
+      >Saved</a
+    >
+    <a
+      href="javascript:;"
+      class="tab"
+      [class.active]="activeTab == 'default'"
+      (click)="activeTab = 'default'"
+      >Default</a
+    >
+  </div>
+
+  <div class="row">
+    <div
+      class="col-md-6 my-1"
+      *ngFor="let template of activeTab == 'saved' ? savedTemplates : templates"
+    >
+      <div class="template" (click)="selectTemplate(template.template)">
+        <iframe [srcdoc]="template.iframeHtml"></iframe>
+        <a
+          href="javascript:;"
+          *ngIf="activeTab === 'saved'"
+          class="delete-button"
+          (click)="$event.stopPropagation(); deleteTemplate(template.id)"
+          ><i class="far fa-trash"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+</ng-container>

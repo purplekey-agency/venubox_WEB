@@ -1,0 +1,13 @@
+<div class="toggle-wrapper" [class.additional-shadow]="ngControl?.value">
+  <input
+    [id]="toggleId"
+    type="checkbox"
+    [checked]="isChecked"
+    [formControl]="ngControl ? ngControl.control : selfNgControl"
+    (change)="checked($event)"
+  />
+  <label [for]="toggleId">
+    <img [src]="imageUrl" *ngIf="imageUrl" />
+    <span class="toggle-name">{{ label }}</span>
+  </label>
+</div>

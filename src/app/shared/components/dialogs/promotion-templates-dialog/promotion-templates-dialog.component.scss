@@ -1,0 +1,83 @@
+@import '../../../../../assets/scss/variables';
+
+.template {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border: 2px solid #eee;
+  cursor: pointer;
+  overflow: hidden;
+  overflow-y: auto;
+  transition: all 1.5s ease;
+
+  &:hover {
+    z-index: 5;
+    opacity: 1;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  img {
+    width: 100%;
+  }
+
+  iframe {
+    width: 200%;
+    height: 200%;
+    overflow: hidden !important;
+    transform: scale(0.5);
+    transform-origin: top left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    border: none;
+  }
+
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: $error;
+    border: 1px solid #fff;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    font-size: 14px;
+    transition: all 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.tabs {
+  margin-bottom: 16px;
+  display: flex;
+
+  .tab {
+    flex: 1;
+    display: inline-block;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #777;
+    border-bottom: 2px solid #eee;
+    text-decoration: none;
+    transition: all 0.2s;
+    text-align: center;
+
+    &:hover {
+      background: #f7f7f7;
+    }
+
+    &.active {
+      border-color: $primary;
+      color: $primary;
+    }
+  }
+}

@@ -1,0 +1,158 @@
+@import '../../../../assets/scss/variables';
+
+.tabs {
+  margin-bottom: 30px;
+  border-bottom: 1px dashed $primary;
+
+  .tab {
+    display: inline-block;
+    border: 1px solid $primary;
+    text-transform: uppercase;
+    color: $primary;
+    padding: 6px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: -1px;
+
+    &:hover {
+      background: #eee;
+    }
+
+    &.active {
+      background: $primary;
+      color: #fff;
+    }
+  }
+}
+
+.sub-package {
+  border: 2px dashed $primary;
+  background: #fbfbfb;
+  padding: 16px;
+  padding-bottom: 60px;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:hover:not(.sub-package--custom) {
+    background: #ddd;
+  }
+
+  &--custom {
+    cursor: default;
+    padding-bottom: 30px;
+  }
+
+  &.selected {
+    background: #e5e5e5;
+  }
+
+  &__header {
+    background: $primary;
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    left: -2px;
+    text-align: center;
+    padding: 12px;
+  }
+
+  h3 {
+    font-size: 28px;
+    color: $primary;
+    text-align: center;
+  }
+
+  &__description {
+    display: block;
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+  }
+
+  ul {
+    margin-top: 30px;
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+
+    li {
+      padding-left: 1em;
+      position: relative;
+    }
+
+    li:before {
+      content: '';
+      padding-right: 5px;
+      width: 6px;
+      height: 6px;
+      display: block;
+      background: $primary;
+      border-radius: 50%;
+      position: absolute;
+      top: 7px;
+      left: 2px;
+    }
+  }
+
+  &__price {
+    margin-top: 30px;
+    font-size: 42px;
+    color: $primary;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  &__price-sub {
+    color: $primary;
+    text-align: center;
+  }
+
+  &__tip {
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+  }
+
+  &__coupon {
+    text-align: center;
+    margin-top: 16px;
+
+    h4 {
+      font-size: 24px;
+      color: $primary;
+      line-height: 1;
+      margin: 0;
+    }
+
+    span {
+      font-size: 12px;
+      color: #777;
+    }
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+
+    label {
+      color: #777;
+    }
+
+    input {
+      text-align: center;
+      border: 1px solid $primary;
+      outline: none;
+      height: 45px;
+      font-size: 22px;
+      color: #333;
+    }
+  }
+}

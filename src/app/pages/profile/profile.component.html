@@ -1,0 +1,109 @@
+<div class="container mt-4">
+  <div class="user-box">
+    <div
+      class="profile-photo"
+      [ngStyle]="{
+        'background-image': currentUser?.profileImage
+          ? 'url(' + currentUser.profileImage + ')'
+          : 'url(../../../../assets/img/defaultAvatar.png)'
+      }"
+    >
+      <ng-container *ngIf="!isUploading">
+        <label for="file">Edit photo</label>
+        <input
+          type="file"
+          id="file"
+          (change)="handleFileInput($event.target.files)"
+        />
+      </ng-container>
+
+      <div class="spinner" *ngIf="isUploading"></div>
+    </div>
+
+    <form [formGroup]="form">
+      <app-alerts [alerts]="alerts"></app-alerts>
+
+      <div class="form-group">
+        <label for="name">{{ 'name' | translate }}</label>
+        <app-text-input inputName="name" [formControl]="form.controls['name']">
+        </app-text-input>
+      </div>
+
+      <div class="form-group">
+        <label for="companyName">{{ 'companyName' | translate }}</label>
+        <app-text-input
+          inputcompanyName="companyName"
+          [formControl]="form.controls['companyName']"
+        >
+        </app-text-input>
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ 'email' | translate }}</label>
+        <app-text-input
+          inputName="email"
+          [formControl]="form.controls['email']"
+        >
+        </app-text-input>
+        <span style="margin-top: 4px; font-size: 12px; color: #999"
+          >Changing Email address will log you out until you verify your new
+          email address.</span
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">{{ 'mobileNumber' | translate }}</label>
+        <ngx-intl-tel-input
+          [cssClass]="'phone-input'"
+          [preferredCountries]="preferredCountries"
+          [enableAutoCountrySelect]="false"
+          [enablePlaceholder]="true"
+          [searchCountryFlag]="true"
+          [searchCountryField]="[
+            SearchCountryField.Iso2,
+            SearchCountryField.Name
+          ]"
+          [selectFirstCountry]="false"
+          [selectedCountryISO]="CountryISO.UnitedKingdom"
+          [maxLength]="15"
+          [tooltipField]="TooltipLabel.Name"
+          [phoneValidation]="true"
+          name="phoneNumber"
+          [formControl]="form.controls['phoneNumber']"
+          [selectedCountryISO]="selectedCountryISO"
+        ></ngx-intl-tel-input>
+        <app-form-error
+          [ngControl]="form.controls['phoneNumber']"
+        ></app-form-error>
+        <span style="margin-top: 4px; font-size: 12px; color: #999"
+          >Changing Mobile number will log you out until you verify your new
+          mobile number.</span
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="companyName"
+          >Categories
+          <a href="javascript:;" (click)="editCategories()" class="edit-link"
+            >edit</a
+          ></label
+        >
+
+        <span *ngFor="let cat of currentUser.categories; let isLast = last">
+          {{ cat }}{{ isLast ? '' : ', ' }}</span
+        >
+      </div>
+
+      <div class="text-right">
+        <button
+          (click)="save()"
+          class="button button-primary"
+          [class.button-loading]="isLoading"
+          [disabled]="!form.valid"
+        >
+          {{ 'saveChanges' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

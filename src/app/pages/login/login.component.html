@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="login-page">
+    <div class="row">
+      <div
+        *ngIf="!isAdminLogin"
+        class="col-12 col-xl-6 p-1 p-md-4 p-xl-5 register-container"
+      >
+        <h1 class="font-weight-normal">{{ 'register' | translate }}</h1>
+        <p class="my-5 pr-5">
+          Build promotional offers targeting our mobile app users based on their
+          physical location and Interest Preferences. Drive more consumers to
+          your business venue during off-peak hours by delivering offers to
+          consumers in real-time. Respond to direct inbound enquiries via our
+          integrated Chat. Measure Promotion Performance to continually improve
+          your marketing efforts and prove ROI more effectively than traditional
+          press-ads and flyers by directly targeting consumers interested in
+          your service(s).
+        </p>
+        <button (click)="registration()" class="button button-primary">
+          {{ 'register' | translate }}
+        </button>
+      </div>
+
+      <div
+        class="col-12 col-xl-6 p-1 p-md-4 p-xl-5"
+        [class.offset-xl-3]="isAdminLogin"
+      >
+        <div class="login-form">
+          <h1 class="font-weight-normal">{{ 'signIn' | translate }}</h1>
+          <form class="form" [formGroup]="form" (submit)="submit()">
+            <app-alerts [alerts]="alerts"></app-alerts>
+            <div class="form-group">
+              <label for="email">{{ 'email' | translate }}</label>
+              <app-text-input
+                inputName="email"
+                size="lg"
+                [formControl]="form.controls['email']"
+                type="email"
+              >
+              </app-text-input>
+            </div>
+            <div class="form-group mt-3">
+              <label for="password">{{ 'password' | translate }}</label>
+              <app-text-input
+                inputName="password"
+                type="password"
+                [formControl]="form.controls['password']"
+                size="lg"
+              >
+              </app-text-input>
+            </div>
+
+            <div class="forgot-password" *ngIf="!isAdminLogin">
+              <a routerLink="/forgot-password">{{
+                'forgotPassword' | translate
+              }}</a>
+            </div>
+
+            <button
+              [class.button-loading]="isLoading"
+              type="submit"
+              class="button button-primary"
+            >
+              {{ 'login' | translate }}
+            </button>
+
+            <div class="have-account-text" *ngIf="!isAdminLogin">
+              <span>{{ 'dontHaveAnAccount' | translate }}</span>
+              <a [routerLink]="'/register'">{{ 'register' | translate }}</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

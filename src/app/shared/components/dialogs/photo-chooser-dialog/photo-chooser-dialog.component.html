@@ -1,0 +1,13 @@
+<div class="spinner" *ngIf="isLoading"></div>
+
+<div class="images-wrapper" *ngIf="!isLoading">
+  <div class="nothing-found" *ngIf="!images.length">No images found...</div>
+  <div
+    class="image"
+    *ngFor="let image of images"
+    [ngStyle]="{
+      'background-image': 'url(' + image.imageUrl + ')'
+    }"
+    (click)="selectImage(image)"
+  ></div>
+</div>

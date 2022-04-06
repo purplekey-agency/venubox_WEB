@@ -1,0 +1,23 @@
+<div class="dialog-header">
+  <div class="dialog-title">
+    <h1>{{ dialogTitle }}</h1>
+  </div>
+
+  <a href="javascript:;" class="dialog-close" (click)="close()"></a>
+</div>
+
+<div class="dialog-content">
+  {{ dialogMessage }}
+
+  <div class="mt-4">
+    <button class="button button-primary w-100" (click)="close(true)">
+      {{ 'confirm' | translate }}
+    </button>
+    <button
+      class="button button-outline-secondary w-100 mt-2"
+      (click)="close()"
+    >
+      {{ 'cancel' | translate }}
+    </button>
+  </div>
+</div>

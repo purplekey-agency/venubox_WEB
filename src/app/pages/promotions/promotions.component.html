@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'home' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{ 'promotions' | translate }}</span>
+  </div>
+
+  <div class="border-box">
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <h4 class="font-weight-normal">{{ 'promotions' | translate }}</h4>
+        <p class="text-muted">
+          {{ 'promotionsSubtitle' | translate }}
+        </p>
+      </div>
+      <button
+        (click)="addPromotions()"
+        class="button button-primary button-sm text-uppercase"
+      >
+        + {{ 'add' | translate }}
+      </button>
+    </div>
+    <ngx-datatable
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="columns"
+      [loadingIndicator]="isLoading"
+      [footerHeight]="50"
+      [externalPaging]="true"
+      [externalSorting]="true"
+      [count]="tableData.totalResults"
+      [offset]="tableData.page - 1"
+      [limit]="tableData.pageSize"
+      (page)="tableChangePage($event)"
+      (sort)="tableSort($event)"
+    >
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #tableAction let-row="row" let-value="value">
+  <a class="action-button" (click)="editPromotion(row.id)" href="javascript:;">
+    <i class="fas fa-pencil"></i>
+  </a>
+  <a
+    class="action-button"
+    (click)="duplicatePromotion(row.id)"
+    href="javascript:;"
+  >
+    <i class="fas fa-copy"></i>
+  </a>
+  <a
+    class="action-button"
+    (click)="removePromotion(row.id)"
+    href="javascript:;"
+  >
+    <i class="fas fa-trash"></i>
+  </a>
+</ng-template>
+
+<ng-template #tableStatus let-row="row" let-value="value">
+  <span *ngIf="value == PromotionStatusEnum.Scheduled" class="text-blue">
+    {{ 'scheduled' | translate }}
+  </span>
+  <span *ngIf="value == PromotionStatusEnum.Live" class="text-green">
+    {{ 'live' | translate }}
+  </span>
+  <span *ngIf="value == PromotionStatusEnum.Expired" class="text-red">
+    {{ 'expired' | translate }}
+  </span>
+  <span *ngIf="value == PromotionStatusEnum.Disabled" class="text-red">
+    {{ 'disabled' | translate }}
+  </span>
+</ng-template>

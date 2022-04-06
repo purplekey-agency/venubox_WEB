@@ -1,0 +1,100 @@
+@import './assets/scss/fontawesome5pro';
+@import '../src/assets/scss/_bootstrap-utilities';
+@import './assets/scss/variables';
+@import '~bootstrap/dist/css/bootstrap-grid.css';
+@import '~bootstrap/dist/css/bootstrap-reboot.css';
+@import './assets/scss/components/button';
+@import './assets/scss/components/form';
+@import './assets/scss/components/spinner';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import './assets/scss/components/table';
+@import '~@ctrl/ngx-emoji-mart/picker';
+@import '~ngx-toastr/toastr';
+
+html,
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+  color: $secondary;
+}
+
+.location-dialog {
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 1000px !important;
+  overflow: hidden;
+}
+
+.choose-location-dialog {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.phone-verification-dialog {
+  overflow: visible !important;
+}
+
+.text-red {
+  color: $error;
+}
+
+.text-green {
+  color: $success;
+}
+
+.text-blue {
+  color: $info;
+}
+
+hr {
+  border: none;
+  background: #c2c2c2;
+  height: 1px;
+}
+
+.breadcrumbs {
+  font-weight: 500;
+  margin-bottom: 12px;
+
+  a {
+    color: lighten($secondary, 30);
+  }
+
+  :first-child {
+    cursor: pointer;
+  }
+
+  i {
+    font-size: 10px;
+  }
+
+  .current {
+    color: $primary;
+  }
+}
+
+.app-textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #dadbdb;
+  border-radius: 3px;
+  outline: none;
+  font-size: 16px;
+  color: #666;
+  background: rgba(245, 248, 249, 0.3);
+  transition: all 0.2s;
+  min-height: 50px;
+  max-height: 200px;
+
+  &:focus {
+    color: black;
+    font-weight: 500;
+    border-color: $primary;
+    box-shadow: 0 0 5px $primary;
+  }
+
+  &.ng-touched.ng-invalid {
+    border-color: $error !important;
+  }
+}

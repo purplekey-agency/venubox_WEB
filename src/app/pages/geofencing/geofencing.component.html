@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'home' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{ 'geofencing' | translate }}</span>
+  </div>
+
+  <div class="border-box">
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <h4 class="font-weight-normal">{{ 'geofencing' | translate }}</h4>
+        <p class="text-muted">
+          {{ 'geofencingSubtitle' | translate }}
+        </p>
+      </div>
+      <button
+        (click)="addLocation()"
+        class="button button-primary button-sm text-uppercase"
+      >
+        + {{ 'add' | translate }}
+      </button>
+    </div>
+    <ngx-datatable
+      [columnMode]="'force'"
+      [rows]="rows"
+      [columns]="columns"
+      [loadingIndicator]="isLoading"
+      [footerHeight]="50"
+      [externalPaging]="true"
+      [externalSorting]="true"
+      [count]="tableData.totalResults"
+      [offset]="tableData.page - 1"
+      [limit]="tableData.pageSize"
+      (page)="tableChangePage($event)"
+      (sort)="tableSort($event)"
+    >
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #tableAction let-row="row" let-value="value">
+  <a class="action-button" (click)="editLocation(row.id)" href="javascript:;">
+    <i class="fas fa-pencil"></i>
+  </a>
+  <a class="action-button" (click)="removeLocation(row.id)" href="javascript:;">
+    <i class="fas fa-trash"></i>
+  </a>
+</ng-template>

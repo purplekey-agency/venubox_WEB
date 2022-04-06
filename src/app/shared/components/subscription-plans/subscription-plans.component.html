@@ -1,0 +1,129 @@
+<div class="tabs">
+  <div
+    class="tab"
+    [class.active]="activeTab == 'monthly'"
+    (click)="setTab('monthly')"
+  >
+    Monthly Fee
+  </div>
+  <div
+    class="tab"
+    [class.active]="activeTab == 'annual'"
+    (click)="setTab('annual')"
+  >
+    Annual Fee
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6 col-md-4">
+    <ng-container
+      *ngTemplateOutlet="plan; context: { plan: plans[0] }"
+    ></ng-container>
+  </div>
+
+  <div class="col-6 col-md-4">
+    <ng-container
+      *ngTemplateOutlet="plan; context: { plan: plans[1] }"
+    ></ng-container>
+  </div>
+
+  <div class="col-6 col-md-4">
+    <ng-container
+      *ngTemplateOutlet="plan; context: { plan: plans[2] }"
+    ></ng-container>
+  </div>
+
+  <div class="col-6 mt-4">
+    <ng-container
+      *ngTemplateOutlet="plan; context: { plan: plans[3] }"
+    ></ng-container>
+  </div>
+
+  <div class="col-6 mt-4">
+    <div class="sub-package sub-package--custom">
+      <h3>CUSTOM Package</h3>
+      <span class="sub-package__description"
+        >Suitable for 6 sites or more:</span
+      >
+
+      <p
+        class="sub-package__description mt-4 flex-grow-1 d-flex align-items-center"
+      >
+        Please get in touch with our team to get custom pricing and your code to
+        proceed to payment
+      </p>
+
+      <div class="sub-package__input">
+        <label>Please enter your code here:</label>
+        <input
+          type="text"
+          placeholder="000 - 000 - 000 - 000"
+          [cleave]="{
+            blocks: [3, 3, 3, 3],
+            delimiter: '-'
+          }"
+          [formControl]="customCode"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #plan let-plan="plan">
+  <div
+    class="sub-package"
+    (click)="selectPackage(plan.id)"
+    [class.selected]="selectedPackage == plan.id"
+  >
+    <div class="sub-package__header" *ngIf="plan.hasTrial">
+      3 MONTH FREE TRIAL
+    </div>
+
+    <h3>{{ plan.name }}</h3>
+    <span class="sub-package__description">{{ plan.description }}</span>
+
+    <ul>
+      <li>{{ plan.brandIdentitiesLimit }} x Brand Identities</li>
+      <li>{{ plan.contactIdentitiesLimit }} x Chat Contact Profiles</li>
+      <li>{{ plan.geofencesLimit }} x Geofences</li>
+      <li>
+        {{ plan.activePromotionsLimit }} x Live Promotions / Full Promotion
+        Performance Reports Included
+      </li>
+      <li>Consumer Chat Inbox</li>
+      <li>Email Support</li>
+    </ul>
+
+    <div class="sub-package__price">
+      £{{ activeTab == 'monthly' ? plan.monthlyPrice : plan.yearlyPrice }}
+    </div>
+
+    <div class="sub-package__price-sub" *ngIf="plan.contractMonths">
+      Per
+      {{
+        activeTab == 'monthly'
+          ? 'Month'
+          : plan.contractMonths == 12
+          ? '1 Year'
+          : '6 Month'
+      }}
+      Subscription
+    </div>
+    <div class="sub-package__price-sub" *ngIf="!plan.contractMonths">
+      Per Promotion
+    </div>
+
+    <div class="sub-package__tip" *ngIf="plan.contractMonths">
+      ({{ plan.contractMonths }} Month Contract)
+    </div>
+    <div class="sub-package__tip" *ngIf="!plan.contractMonths">
+      (No Contractual Commitment)
+    </div>
+
+    <div class="sub-package__coupon" *ngIf="plan.contractMonths">
+      <h4>15% OFF</h4>
+      <span>for annual payment</span>
+    </div>
+  </div>
+</ng-template>

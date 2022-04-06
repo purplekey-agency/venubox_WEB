@@ -1,0 +1,80 @@
+@import '../../../../assets/scss/variables';
+
+.toggle-wrapper {
+  background-color: #f7f7f7;
+  padding: 6px 0px;
+  border-radius: 3px;
+
+  &.additional-shadow {
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    color: gray;
+    position: relative;
+    padding-right: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0 !important;
+
+    img {
+      width: 24px;
+      max-height: 22px;
+      margin-left: 16px;
+    }
+
+    .toggle-name {
+      margin-left: 16px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      margin-top: -10px;
+      width: 36px;
+      height: 20px;
+      border-radius: 15px;
+      transition: all 0.2s;
+      background: #f7f7f7;
+      border: 1px solid gray;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 16px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s;
+      background: gray;
+      border: none;
+      right: 26px;
+    }
+  }
+}
+
+input {
+  display: none;
+
+  &:checked ~ label {
+    color: $primary;
+
+    &:before {
+      background: $primary;
+      border: none;
+    }
+
+    &:after {
+      right: 10px;
+      background: white;
+    }
+  }
+}

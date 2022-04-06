@@ -1,0 +1,26 @@
+@import '../../../../../assets/scss/variables';
+
+h3 {
+  font-size: 18px;
+}
+
+.resend-code-wrapper {
+  text-align: right;
+  margin-bottom: 16px;
+
+  .resend-code {
+    font-size: 12px;
+    text-decoration: none;
+    color: lighten($secondary, 30) !important;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      text-decoration: none;
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+<div
+  class="input-wrapper"
+  [class]="wrapperClassName"
+  [class.active]="popupVisible"
+>
+  <div class="popup" *ngIf="popupVisible">
+    <dl-date-time-picker
+      *ngIf="type === 'datetime'"
+      startView="day"
+      maxView="year"
+      minView="minute"
+      minuteStep="5"
+      (change)="dateSelected($event)"
+      [selectFilter]="datePickerFilter"
+      [startDate]="ngControl.value || null"
+    >
+    </dl-date-time-picker>
+
+    <dl-date-time-picker
+      *ngIf="type === 'date'"
+      maxView="year"
+      minView="day"
+      startView="month"
+      minuteStep="5"
+      (change)="dateSelected($event)"
+      [selectFilter]="datePickerFilter"
+      [startDate]="ngControl.value || null"
+    >
+    </dl-date-time-picker>
+
+    <dl-date-time-picker
+      *ngIf="type === 'time'"
+      maxView="hour"
+      minView="minute"
+      startView="hour"
+      minuteStep="5"
+      (change)="dateSelected($event)"
+    >
+    </dl-date-time-picker>
+  </div>
+
+  <input
+    class="input"
+    [placeholder]="placeholder"
+    [formControl]="ngControl ? ngControl.control : dummyFormControl"
+    [name]="inputName"
+    [id]="inputName"
+    readonly
+    (focus)="onFocus()"
+    dlDateTimeInput
+    date-input-format
+    [format]="type"
+    [attr.disabled]="disabled ? 'disabled' : null"
+  />
+  <app-form-error [ngControl]="ngControl"></app-form-error>
+</div>

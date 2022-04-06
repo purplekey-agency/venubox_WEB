@@ -1,0 +1,11 @@
+ @import './../../../../assets/scss/variables';
+
+ .error-message {
+   color: $error;
+   font-size: 14px;
+   margin-top: 8px;
+
+   i {
+     padding-right: 4px;
+   }
+ }

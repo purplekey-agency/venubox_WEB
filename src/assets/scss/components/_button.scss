@@ -1,0 +1,131 @@
+@import '../variables';
+
+.button {
+  min-width: 200px;
+  height: 38px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  border-radius: 3px;
+  transition: all 0.2s;
+  padding: 0 8px;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+  &:focus {
+    outline: none;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+    color: transparent;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border: 2px solid $primary;
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.7s linear infinite;
+      margin: auto;
+    }
+
+    &.button-secondary {
+      &:before {
+        border-color: $secondary;
+        border-top-color: gray;
+      }
+    }
+
+    &.button-outline-secondary {
+      &:before {
+        border-color: #fff;
+        border-top-color: $secondary;
+      }
+    }
+
+    &.button-outline-primary {
+      &:before {
+        border-color: #fff;
+        border-top-color: $primary;
+      }
+    }
+  }
+
+  // Sizing
+
+  &-xs {
+    min-width: 100px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  &-sm {
+    min-width: 130px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  &-lg {
+    min-width: 150px;
+    height: 40px;
+    font-size: 13px;
+  }
+  &-xl {
+    height: 40px;
+    font-size: 15px;
+  }
+
+  // Colors
+  &-primary {
+    background: $primary;
+    color: #fff;
+
+    &:hover {
+      background: lighten($primary, 10);
+    }
+  }
+
+  &-secondary {
+    background: $secondary;
+    color: $primary;
+
+    &:hover {
+      background: lighten($secondary, 10);
+    }
+  }
+
+  &-outline-primary {
+    background: #fff;
+    color: $primary;
+    box-shadow: inset 0px 0px 0px 1px $primary;
+
+    &:hover {
+      background: darken(#fff, 10);
+      color: darken($primary, 10);
+      box-shadow: inset 0px 0px 0px 1px darken($primary, 10);
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

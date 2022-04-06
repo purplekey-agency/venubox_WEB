@@ -1,0 +1,258 @@
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'home' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <a routerLink="/promotions">{{ 'offers' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{
+      (id ? 'updateOffer' : 'addOffer') | translate
+    }}</span>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="spinner-wrapper" *ngIf="isLoading">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="alert alert-info" *ngIf="!id && isUsingPayg">
+      Purchased PAYG Plan will be used for creating this offer. Duration of this
+      offer is 24 hours from the specified start date.
+    </div>
+
+    <app-alerts [alerts]="alerts"></app-alerts>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="border-box">
+          <form class="form" [formGroup]="form" (submit)="save()">
+            <div class="badge badge-info" *ngIf="promotion?.subscriptionId">
+              PAYG
+            </div>
+            <div class="form-group">
+              <label for="name">{{ 'name' | translate }}</label>
+              <app-text-input
+                inputName="name"
+                size="lg"
+                [formControl]="form.controls['name']"
+              >
+              </app-text-input>
+            </div>
+
+            <div class="form-group" *ngIf="!isUsingPayg">
+              <app-toggle
+                [formControl]="form.controls.isContinues"
+                label="Continuous Offer"
+              ></app-toggle>
+            </div>
+
+            <ng-container *ngIf="!form.value.isContinues">
+              <div class="form-group">
+                <label for="startDate">{{ 'startDate' | translate }}</label>
+                <app-date-time-input
+                  [formControl]="form.controls['startDate']"
+                  [disablePastDates]="true"
+                  [maxDate]="form.value.endDate"
+                  type="date"
+                  [disabled]="promotion?.subscriptionId"
+                ></app-date-time-input>
+              </div>
+
+              <div class="form-group" *ngIf="!isUsingPayg">
+                <label for="endDate">{{ 'endDate' | translate }}</label>
+                <app-date-time-input
+                  [formControl]="form.controls['endDate']"
+                  [disablePastDates]="true"
+                  [minDate]="form.value.startDate"
+                  type="date"
+                  [disabled]="promotion?.subscriptionId"
+                ></app-date-time-input>
+              </div>
+
+              <div class="form-group">
+                <label for="offerValidityPeriod">{{
+                  'offerValidityTime' | translate
+                }}</label>
+                <div class="from-to">
+                  <app-time-select
+                    [control]="form.controls['startTime']"
+                  ></app-time-select>
+                  <span>-</span>
+                  <app-time-select
+                    [control]="form.controls['endTime']"
+                  ></app-time-select>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="form.value.isContinues">
+              <div class="form-group">
+                <label for="startDate">{{ 'start' | translate }}</label>
+                <div class="row">
+                  <div class="col-12">
+                    <app-date-time-input
+                      [formControl]="form.controls['startDate']"
+                      [disablePastDates]="true"
+                      [maxDate]="form.value.endDate"
+                      type="date"
+                      [disabled]="promotion?.subscriptionId"
+                    ></app-date-time-input>
+                  </div>
+                  <div class="col-12 mt-1">
+                    <app-time-select
+                      [control]="form.controls['startTime']"
+                    ></app-time-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group" *ngIf="!isUsingPayg">
+                <label for="endDate">{{ 'end' | translate }}</label>
+                <div class="row">
+                  <div class="col-12">
+                    <app-date-time-input
+                      [formControl]="form.controls['endDate']"
+                      [disablePastDates]="true"
+                      [minDate]="form.value.startDate"
+                      type="date"
+                      [disabled]="promotion?.subscriptionId"
+                    ></app-date-time-input>
+                  </div>
+                  <div class="col-12 mt-1">
+                    <app-time-select
+                      [control]="form.controls['endTime']"
+                    ></app-time-select>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div
+              class="form-group"
+              *ngIf="
+                !isUsingPayg &&
+                !promotion?.subscriptionId &&
+                !form.value.isContinues
+              "
+            >
+              <label for="">Offer Validity Day</label>
+              <app-select
+                [options]="weekDaysOptions"
+                [formControl]="form.controls['weekDays']"
+                multiselect="true"
+                [selectedOption]="selectedWeekDays"
+              ></app-select>
+            </div>
+
+            <a
+              href="javascript:;"
+              class="offer-activity-link"
+              (click)="seePlannedActivity()"
+              ><i class="fal fa-clock"></i> See planned activity time</a
+            >
+
+            <div class="form-group">
+              <label for="geofence">{{ 'geofence' | translate }}</label>
+              <app-select
+                [formControl]="form.controls['geofenceId']"
+                [options]="geofences"
+                [selectedOption]="selectedGeofence"
+                [placeholder]="'selectGeofence' | translate"
+              ></app-select>
+            </div>
+
+            <div class="form-group">
+              <label for="contact">{{ 'contactProfile' | translate }}</label>
+              <app-select
+                [formControl]="form.controls['contactId']"
+                [options]="contactIdentities"
+                [selectedOption]="selectedContactIdentity"
+                [placeholder]="'selectContact' | translate"
+              ></app-select>
+            </div>
+
+            <div class="form-group">
+              <label for="image">{{ 'contactProfileImage' | translate }}</label>
+              <div
+                class="image-placeholder"
+                [ngStyle]="
+                  selectedImage
+                    ? {
+                        'background-image':
+                          'url(' + selectedImage.imageUrl + ')'
+                      }
+                    : {}
+                "
+              >
+                <ng-container *ngIf="!selectedImage">
+                  <button
+                    type="button"
+                    class="button button-outline-primary"
+                    (click)="openImageChooser()"
+                  >
+                    Choose image
+                  </button>
+                  or
+                  <button
+                    type="button"
+                    class="button button-outline-primary"
+                    (click)="openUploadImage()"
+                  >
+                    Upload image
+                  </button>
+                </ng-container>
+                <a
+                  href="javascript:;"
+                  *ngIf="selectedImage"
+                  class="remove-image"
+                  (click)="removeSelectedImage()"
+                  ><i class="fal fa-times"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="id">
+              <app-toggle
+                [formControl]="form.controls.isEnabled"
+                label="Enable Go Live"
+                toggleId="liveToggle"
+              ></app-toggle>
+            </div>
+
+            <div class="form-buttons">
+              <button
+                type="button"
+                (click)="cancel()"
+                [disabled]="isSaving || editorUploadQueue.length"
+                class="button button-outline-primary mr-1"
+              >
+                {{ 'cancel' | translate }}
+              </button>
+              <button
+                type="submit"
+                [disabled]="editorUploadQueue.length"
+                [class.button-loading]="isSaving"
+                class="button button-primary"
+              >
+                {{ (id ? 'update' : 'create') | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="border-box">
+          <div class="editor-wrapper">
+            <div class="templates-button">
+              <button (click)="saveTemplate()">Save as Template</button>
+              <button (click)="showTemplates()">Load Template</button>
+            </div>
+            <email-editor
+              (loaded)="editorLoaded($event)"
+              [appearance]="appearance"
+            ></email-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

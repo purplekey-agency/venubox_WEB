@@ -1,0 +1,92 @@
+<div
+  class="error-message"
+  *ngIf="
+    ngControl &&
+    ngControl.touched &&
+    ngControl.dirty &&
+    ngControl.hasError('required')
+  "
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{ 'form.required' | translate }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="
+    ngControl &&
+    ngControl.touched &&
+    ngControl.dirty &&
+    ngControl.hasError('minlength')
+  "
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{
+    'form.minLength'
+      | translate: { value: ngControl.errors['minlength'].requiredLength }
+  }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="ngControl && ngControl.touched && ngControl.hasError('maxlength')"
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{
+    'form.maxLength'
+      | translate: { value: ngControl.errors['maxlength'].requiredLength }
+  }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="ngControl && ngControl.touched && ngControl.hasError('email')"
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{ 'invalidEmail' | translate }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="ngControl && ngControl.touched && ngControl.hasError('emailInUse')"
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{ 'emailInUse' | translate }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="ngControl && ngControl.touched && ngControl.hasError('pattern')"
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{ 'dontMatchPattern' | translate }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="
+    ngControl &&
+    ngControl.touched &&
+    ngControl.hasError('phoneNumberFormatInvalid')
+  "
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{ 'phoneNumberFormatInvalid' | translate }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="
+    ngControl && ngControl.touched && ngControl.hasError('phoneNumberInUse')
+  "
+>
+  <i class="fal fa-exclamation-circle"></i>
+  {{ 'exception.PhoneNumberAlreadyInUse' | translate }}
+</div>
+
+<div
+  class="error-message"
+  *ngIf="ngControl && ngControl.touched && ngControl.hasError('unknown')"
+>
+  <i class="fal fa-exclamation-circle"></i>
+</div>

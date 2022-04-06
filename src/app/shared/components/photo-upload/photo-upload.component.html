@@ -1,0 +1,55 @@
+<div class="upload-card">
+  <div class="border" #container>
+    <i class="fal fa-cloud-upload"></i>
+    <p>{{ 'dragAndDropFilesHere' | translate }}</p>
+    <p class="or">{{ 'or' | translate }}</p>
+    <button (click)="uploader.click()" class="button button-primary button-sm">
+      {{ 'browseFile' | translate }}
+    </button>
+
+    <input
+      hidden
+      type="file"
+      multiple="multiple"
+      #uploader
+      (change)="uploadFile($event)"
+      accept="image/png, image/jpeg, image/jpg, image/svg"
+    />
+  </div>
+
+  <div class="file-list" *ngIf="addedFileList.length">
+    <div class="file-list-item" *ngFor="let file of addedFileList">
+      <div
+        class="fli-image"
+        [ngStyle]="{ 'background-image': 'url(' + file.previewBase64 + ')' }"
+      ></div>
+      <div class="fli-info">
+        <span class="name">{{ file.file.name }}</span>
+        <span class="size">{{ formatBytes(file.file.size) }}</span>
+      </div>
+      <div class="fli-actions">
+        <a
+          href="javascript:;"
+          *ngIf="file.uploadProgress === 100"
+          (click)="removeFile(file)"
+          ><i class="fas fa-trash"></i
+        ></a>
+        <a
+          href="javascript:;"
+          class="cancel"
+          *ngIf="file.uploadProgress < 100"
+          (click)="cancelUpload(file)"
+          ><i class="fas fa-times-circle"></i
+        ></a>
+      </div>
+
+      <div class="fli-progress-bar-wrapper">
+        <div
+          class="fli-progress-bar"
+          [style.width]="file.uploadProgress + '%'"
+        ></div>
+        <div class="fli-progress-bar-text">{{ file.uploadProgress }}%</div>
+      </div>
+    </div>
+  </div>
+</div>

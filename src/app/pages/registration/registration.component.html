@@ -1,0 +1,315 @@
+<div class="container py-5">
+  <div class="page-header">
+    <div class="header-title">
+      <span class="title">{{
+        'registerStartUsingOurPlatform' | translate
+      }}</span>
+      <span class="subtitle">{{
+        'followStepsToCompleteYourProfile' | translate
+      }}</span>
+    </div>
+
+    <img *ngIf="currentStep === 1" src="../../../assets/img/step1.png" />
+    <img *ngIf="currentStep === 2" src="../../../assets/img/step2.png" />
+    <img *ngIf="currentStep === 3" src="../../../assets/img/step3.png" />
+    <img
+      *ngIf="currentStep === 4 || currentStep === 5"
+      src="../../../assets/img/step4.png"
+    />
+  </div>
+
+  <app-alerts [alerts]="alerts"></app-alerts>
+
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <div class="step-items-wrapper">
+        <div class="vertical-line"></div>
+        <div class="step-item">
+          <div class="line-dot"></div>
+          <div class="step-info">
+            <div class="step-title">{{ 'generalInformation' | translate }}</div>
+            <div class="step-subtitle">{{ 'fillOutTheForm' | translate }}</div>
+          </div>
+          <div
+            [class.current-step]="currentStep === 1"
+            [class.previous-step]="currentStep > 1"
+            class="step-number"
+          >
+            <span *ngIf="currentStep === 1">1</span>
+            <i *ngIf="currentStep > 1" class="far fa-check"></i>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="line-dot"></div>
+          <div class="step-info">
+            <div class="step-title">{{ 'category' | translate }}</div>
+            <div class="step-subtitle">
+              {{ 'selectCategories' | translate }}
+            </div>
+          </div>
+          <div
+            [class.current-step]="currentStep === 2"
+            [class.previous-step]="currentStep > 2"
+            class="step-number"
+          >
+            <span *ngIf="currentStep === 2">2</span>
+            <i *ngIf="currentStep > 2" class="far fa-check"></i>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="line-dot"></div>
+          <div class="step-info">
+            <div class="step-title">{{ 'geofencing' | translate }}</div>
+            <div class="step-subtitle">
+              {{ 'addYourLocations' | translate }}
+            </div>
+          </div>
+          <div
+            [class.current-step]="currentStep === 3"
+            [class.previous-step]="currentStep > 3"
+            class="step-number"
+          >
+            <span *ngIf="currentStep === 3">3</span>
+            <i *ngIf="currentStep > 3" class="far fa-check"></i>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="line-dot"></div>
+          <div class="step-info">
+            <div class="step-title">{{ 'brandIdentity' | translate }}</div>
+            <div class="step-subtitle">{{ 'uploadYourFiles' | translate }}</div>
+          </div>
+          <div
+            [class.current-step]="currentStep === 4"
+            [class.previous-step]="currentStep > 4"
+            class="step-number"
+          >
+            <span *ngIf="currentStep === 4">4</span>
+            <i *ngIf="currentStep > 4" class="far fa-check"></i>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-info">
+            <div class="step-title">{{ 'payment' | translate }}</div>
+            <div class="step-subtitle">
+              {{ 'chooseYourSubscription' | translate }}
+            </div>
+          </div>
+          <div
+            [class.current-step]="currentStep === 5"
+            [class.previous-step]="currentStep > 5"
+            class="step-number"
+          >
+            <span *ngIf="currentStep === 5">5</span>
+            <i *ngIf="currentStep > 5" class="far fa-check"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-9">
+      <div class="d-flex justify-content-between">
+        <span *ngIf="currentStep === 1" class="tab-title">
+          {{ 'generalInformation' | translate }}
+        </span>
+        <span *ngIf="currentStep === 2" class="tab-title">
+          {{ 'category' | translate }}
+        </span>
+        <span *ngIf="currentStep === 3" class="tab-title">
+          {{ 'geofencing' | translate }}
+        </span>
+        <button
+          (click)="addLocation()"
+          *ngIf="currentStep === 3"
+          class="button button-primary button-sm add-button"
+        >
+          +{{ 'add' | translate }}
+        </button>
+        <span *ngIf="currentStep === 4" class="tab-title">
+          {{ 'brandIdentity' | translate }}
+        </span>
+        <span *ngIf="currentStep === 5" class="tab-title">
+          {{ 'payment' | translate }}
+        </span>
+      </div>
+
+      <div *ngIf="currentStep === 1" class="general-information">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label for="email">{{ 'email' | translate }}</label>
+              <app-text-input
+                inputName="email"
+                [formControl]="form.controls['email']"
+              >
+              </app-text-input>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label for="companyName">{{ 'companyName' | translate }}</label>
+              <app-text-input
+                inputName="companyName"
+                [formControl]="form.controls['companyName']"
+              >
+              </app-text-input>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label for="password">{{ 'password' | translate }}</label>
+              <app-text-input
+                inputName="password"
+                type="password"
+                [formControl]="form.controls['password']"
+              >
+              </app-text-input>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label for="phoneNumber">{{ 'mobileNumber' | translate }}</label>
+              <!-- <app-text-input
+                inputName="phoneNumber"
+                [formControl]="form.controls['phoneNumber']"
+              >
+              </app-text-input> -->
+
+              <ngx-intl-tel-input
+                [cssClass]="'phone-input'"
+                [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="false"
+                [enablePlaceholder]="true"
+                [searchCountryFlag]="true"
+                [searchCountryField]="[
+                  SearchCountryField.Iso2,
+                  SearchCountryField.Name
+                ]"
+                [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.UnitedKingdom"
+                [maxLength]="15"
+                [tooltipField]="TooltipLabel.Name"
+                [phoneValidation]="true"
+                [inputId]="phoneNumber"
+                name="phoneNumber"
+                [formControl]="form.controls['phoneNumber']"
+              ></ngx-intl-tel-input>
+              <app-form-error
+                [ngControl]="form.controls['phoneNumber']"
+              ></app-form-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 2" class="category mb-5">
+        <div class="my-2" *ngFor="let category of categories">
+          <app-toggle
+            [imageUrl]="category.imageUrl"
+            [toggleId]="category.id"
+            [inputName]="category.id"
+            [formControl]="categoriesForm.controls[category.id]"
+            [label]="category.name"
+            (valueChanged)="onCategoryChange($event)"
+          ></app-toggle>
+
+          <div class="my-4" *ngIf="categoriesForm.controls[category.id].value">
+            <ng-container *ngFor="let subCategory of category.subcategories">
+              <app-radio-button
+                [name]="category.id"
+                [value]="subCategory.id"
+                [label]="subCategory.name"
+                [checked]="isSubCategorySelected(subCategory.id)"
+                (onChange)="onSubCategoryChange($event)"
+              ></app-radio-button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 3" class="geofencing">
+        <div class="mt-5">
+          <ngx-datatable
+            [columnMode]="'force'"
+            [rows]="geoFencesRows"
+            [columns]="geoFencesColumns"
+            [loadingIndicator]="isLoading"
+            [footerHeight]="50"
+          >
+          </ngx-datatable>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 4" class="brandIdentity mt-3 mb-5">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h4 class="font-weight-normal">
+              {{ 'brandIdentityIcon' | translate }}
+            </h4>
+            <app-photo-upload
+              elementid="drop1"
+              (uploadedPhotoFile)="newBrandLogo($event)"
+              [type]="userIdentityImageType.Brand"
+            ></app-photo-upload>
+          </div>
+          <div class="col-12 col-sm-6">
+            <h4 class="font-weight-normal">
+              {{ 'chatContactProfiles' | translate }}
+            </h4>
+            <app-photo-upload
+              elementid="drop2"
+              (uploadedPhotoFile)="newChatContactProfiles($event)"
+              [type]="userIdentityImageType.Contact"
+            ></app-photo-upload>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentStep === 5" class="brandIdentity mt-3 mb-5">
+        <app-subscription-plans
+          (packageSelected)="packageSelected($event)"
+          (customCodeChanged)="customCodeChanged($event)"
+          (tabSelected)="tabSelected($event)"
+          [selectedPackage]="selectedPackage"
+        ></app-subscription-plans>
+      </div>
+
+      <div class="buttons">
+        <div class="six-or-more" *ngIf="currentStep === 5">
+          <b>6 Sites or more</b> please call for custom pricing
+        </div>
+        <button
+          (click)="skip()"
+          *ngIf="currentStep > 1"
+          class="button button-outline-primary"
+        >
+          {{ 'skip' | translate }}
+        </button>
+        <button
+          (click)="next()"
+          class="button button-primary ml-2"
+          [class.button-loading]="isLoading"
+          [disabled]="currentStep === 5 && !selectedPackage && !customCode"
+        >
+          {{ 'next' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #tableAction let-row="row" let-value="value">
+    <a class="action-button" (click)="editLocation(row.id)" href="javascript:;">
+      <i class="fas fa-pencil"></i>
+    </a>
+    <a
+      class="action-button"
+      (click)="removeLocation(row.id)"
+      href="javascript:;"
+    >
+      <i class="fas fa-trash"></i>
+    </a>
+  </ng-template>
+</div>

@@ -1,0 +1,217 @@
+@import '../../../../../assets/scss/variables';
+
+::ng-deep {
+  .payment-dialog {
+    padding: 0;
+    width: 100% !important;
+    max-width: 1000px !important;
+    overflow: hidden;
+  }
+}
+
+.wrapper {
+  .wrapper-inner {
+    display: flex;
+  }
+
+  .info {
+    width: 100%;
+    max-width: 400px;
+    border: 2px dashed #c62127;
+    background: #fbfbfb;
+    display: flex;
+    justify-content: center;
+    padding: 32px;
+    padding-left: 60px;
+    flex-direction: column;
+
+    .plan-name {
+      position: relative;
+      color: $primary;
+      font-weight: bold;
+      font-size: 24px;
+
+      a {
+        color: $primary;
+        position: absolute;
+        left: -30px;
+        font-size: 25px;
+        transition: all 0.2s;
+
+        &:hover {
+          left: -32px;
+        }
+      }
+    }
+
+    .plan-description {
+      color: #777;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+
+    .plan-price {
+      margin-top: 30px;
+
+      h3 {
+        color: $primary;
+        font-size: 30px;
+        margin: 0;
+      }
+
+      span {
+        font-weight: bold;
+        font-size: 13px;
+        color: #666;
+      }
+
+      &--horizontal {
+        display: flex;
+
+        h3 {
+          font-size: 48px;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-left: 8px;
+
+          span {
+            font-weight: normal;
+
+            &.plan-per-frequency {
+              color: $primary;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+
+    ul {
+      margin-top: 30px;
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+      font-size: 14px;
+
+      li {
+        padding-left: 1em;
+        position: relative;
+      }
+
+      li:before {
+        content: '';
+        padding-right: 5px;
+        width: 6px;
+        height: 6px;
+        display: block;
+        background: $primary;
+        border-radius: 50%;
+        position: absolute;
+        top: 7px;
+        left: 2px;
+      }
+    }
+
+    button.toggle-frequency {
+      line-height: 1;
+      height: 48px;
+
+      b {
+        display: block;
+        text-transform: uppercase;
+      }
+
+      span {
+        font-size: 11px;
+        color: #777;
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .button {
+      min-width: auto;
+      padding-left: 36px;
+      padding-right: 36px;
+    }
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 12px 8px;
+  border: none;
+  border-bottom: 1px solid #dadbdb;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  background: transparent;
+  transition: all 0.2s;
+  outline: none;
+
+  &:focus {
+    color: black;
+    border-color: $primary;
+  }
+
+  &::-webkit-input-placeholder {
+    color: #ccc;
+  }
+
+  &:-ms-input-placeholder {
+    color: #ccc;
+  }
+
+  &::placeholder {
+    color: #ccc;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+  }
+}
+
+::ng-deep {
+  .field {
+    @extend .input;
+    padding: 15px 8px;
+
+    &.StripeElement--focus {
+      border-color: $primary;
+    }
+  }
+}
+
+.trial-note {
+  text-align: right;
+  color: #ccc;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.tos-title {
+  font-size: 22px;
+  color: $primary;
+  margin-bottom: 16px;
+}
+
+.tos-window {
+  border: 2px solid #eee;
+  height: 350px;
+  overflow-y: scroll;
+  padding: 16px;
+}

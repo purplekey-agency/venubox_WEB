@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="breadcrumbs">
+    <a routerLink="/">{{ 'home' | translate }}</a>
+    <i class="fal fa-chevron-right mx-2"></i>
+    <span class="current">{{ 'brandIdentityIcon' | translate }}</span>
+  </div>
+
+  <div class="row justify-content-between">
+    <div class="col-12 mb-2 mb-sm-0 col-sm-5">
+      <div class="border-box">
+        <div class="d-flex flex-column mb-3">
+          <div class="d-flex justify-content-between">
+            <h4 class="font-weight-normal">
+              {{ 'offerIdentityProfiles' | translate }}
+            </h4>
+            <button
+              (click)="addIdentityIcon()"
+              class="button button-primary button-sm text-uppercase"
+            >
+              + {{ 'add' | translate }}
+            </button>
+          </div>
+          <span style="font-size: 14px; margin-top: 8px">{{
+            'offerIdentityProfilesSubtitle' | translate
+          }}</span>
+        </div>
+        <hr />
+
+        <div class="photos-wrapper">
+          <div class="spinner-wrapper" *ngIf="brandIdentityIconsLoading">
+            <div class="spinner"></div>
+          </div>
+
+          <div
+            class="nothing-found"
+            *ngIf="!brandIdentityIconsLoading && !brandIdentityIcons.length"
+          >
+            Nothing found...
+          </div>
+
+          <div class="photo" *ngFor="let photo of brandIdentityIcons">
+            <div class="d-flex align-items-center flex-grow-1">
+              <div
+                class="image"
+                [ngStyle]="{
+                  'background-image': 'url(' + photo.imageUrl + ')'
+                }"
+              ></div>
+              <div class="name-size">
+                <input
+                  type="text"
+                  [ngModel]="photo.name"
+                  (change)="rename(photo.id, $event)"
+                />
+              </div>
+            </div>
+
+            <a
+              href="javascript:;"
+              class="delete"
+              title="Delete"
+              (click)="delete(photo.id, UserIdentityImageType.Brand)"
+              ><i class="fal fa-trash"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-5">
+      <div class="border-box">
+        <div class="d-flex flex-column mb-3">
+          <div class="d-flex justify-content-between">
+            <h4 class="font-weight-normal">
+              {{ 'chatContactProfiles' | translate }}
+            </h4>
+            <button
+              (click)="addChatIcon()"
+              class="button button-primary button-sm text-uppercase"
+            >
+              + {{ 'add' | translate }}
+            </button>
+          </div>
+          <span style="font-size: 14px; margin-top: 8px">{{
+            'chatContactProfilesSubtitle' | translate
+          }}</span>
+        </div>
+        <hr />
+
+        <div class="photos-wrapper">
+          <div class="spinner-wrapper" *ngIf="chatContactIconsLoading">
+            <div class="spinner"></div>
+          </div>
+
+          <div
+            class="nothing-found"
+            *ngIf="!chatContactIconsLoading && !chatContactIcons.length"
+          >
+            Nothing found...
+          </div>
+
+          <div class="photo" *ngFor="let photo of chatContactIcons">
+            <div class="d-flex align-items-center flex-grow-1">
+              <div
+                class="image"
+                [ngStyle]="{
+                  'background-image': 'url(' + photo.imageUrl + ')'
+                }"
+              ></div>
+              <div class="name-size">
+                <input
+                  type="text"
+                  [ngModel]="photo.name"
+                  (change)="rename(photo.id, $event)"
+                />
+              </div>
+            </div>
+
+            <a
+              href="javascript:;"
+              class="delete"
+              title="Delete"
+              (click)="delete(photo.id, UserIdentityImageType.Contact)"
+              ><i class="fal fa-trash"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+@import '../../../assets/scss/variables';
+
+.user-box {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .profile-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    label {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1px solid #fff;
+      background: rgba(0, 0, 0, 0.15);
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 6px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        background: #fff;
+        color: $primary;
+      }
+    }
+
+    label + input {
+      display: none;
+    }
+  }
+
+  form {
+    margin-top: 30px;
+  }
+}
+
+::ng-deep {
+  .iti {
+    width: 100%;
+  }
+
+  .phone-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #dadbdb !important;
+    border-radius: 3px;
+    outline: none;
+    font-size: 16px;
+    color: #666;
+    background: rgba(245, 248, 249, 0.3);
+    transition: all 0.2s;
+
+    &:focus {
+      color: black;
+      font-weight: 500;
+      border-color: $primary;
+      box-shadow: 0 0 5px $primary;
+    }
+
+    &.ng-touched.ng-invalid {
+      border-color: $error !important;
+    }
+  }
+}
+
+.edit-link {
+  color: $primary;
+}

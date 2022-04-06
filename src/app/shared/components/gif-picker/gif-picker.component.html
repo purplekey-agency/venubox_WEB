@@ -1,0 +1,21 @@
+<div class="gif-picker">
+  <div class="gif-list">
+    <div class="spinner spinner-sm" *ngIf="isLoading"></div>
+    <div class="nothing-found" *ngIf="!isLoading && !gifs.length">
+      Nothing found...
+    </div>
+    <img
+      *ngFor="let gif of gifs"
+      [attr.src]="gif.previewUrl"
+      alt=""
+      (click)="selectGif(gif.url)"
+    />
+  </div>
+
+  <input
+    type="text"
+    class="gif-search"
+    placeholder="Search GIFs..."
+    [formControl]="searchControl"
+  />
+</div>
